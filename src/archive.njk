@@ -1,0 +1,11 @@
+---
+layout: base.njk
+title: Archive
+permalink: /archive/
+eleventyExcludeFromCollections: true
+---
+<h1 class="archive-title">Archive</h1>
+<p class="lede">Every poem, newest first. Or browse by kind:
+{% for t in site.types %}<a class="tag" href="/type/{{ t.slug }}/">{{ t.label }}</a>{% endfor %}</p>
+{% set list = haikus %}
+{% include "haiku-list.njk" %}

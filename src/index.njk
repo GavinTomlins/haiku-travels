@@ -1,8 +1,18 @@
+---js
+{
+  layout: "base.njk",
+  eleventyExcludeFromCollections: true,
+  permalink: "/",
+  pagination: { data: "haikus", size: 1, alias: "h", before: (data) => data.slice(0, 1) },
+  eleventyComputed: {
+    haiku: (data) => data.h?.id,
+    lang: (data) => data.h?.language,
+    description: (data) => data.h ? data.h.lines.join(" / ") : data.site.description,
+    canonical: (data) => data.h?.url,
+  },
+}
 ---
-layout: base.njk
-eleventyExcludeFromCollections: true
----
-<h1 class="visually-hidden">{{ site.title }}</h1>
-<p class="lede">A journal of small moments, one poem at a time.</p>
-{% set list = haikus %}
-{% include "haiku-list.njk" %}
+{% set newer = null %}
+{% set older = haikus[1] if haikus.length > 1 else null %}
+{% set number = haikus.length %}
+{% include "poem.njk" %}

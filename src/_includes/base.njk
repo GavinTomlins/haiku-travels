@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% if title %}{{ title }} · {% endif %}{{ site.title }}</title>
   <meta name="description" content="{{ description or site.description }}">
-  <link rel="canonical" href="{{ page.url | absolute }}">
+  <link rel="canonical" href="{{ (canonical or page.url) | absolute }}">
   <meta property="og:site_name" content="{{ site.title }}">
   <meta property="og:type" content="{{ 'article' if haiku else 'website' }}">
   <meta property="og:title" content="{{ title or site.title }}">
@@ -15,7 +15,7 @@
   <meta name="theme-color" content="#e8dcc2">
   <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="/feed.xml">
   <link rel="license" href="{{ site.license.url }}">
-  <link rel="stylesheet" href="/css/site.css">
+  <link rel="stylesheet" href="/css/site.css?v={{ assets.css }}">
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -24,8 +24,8 @@
     <p class="tagline">{{ site.description }}</p>
     <nav aria-label="Main">
       <ul>
-        <li><a href="/" {% if page.url == '/' %}aria-current="page"{% endif %}>All</a></li>
-        {% for t in site.types %}<li><a href="/type/{{ t.slug }}/" {% if page.url == '/type/' + t.slug + '/' %}aria-current="page"{% endif %}>{{ t.label }}</a></li>{% endfor %}
+        <li><a href="/" {% if page.url == '/' %}aria-current="page"{% endif %}>Latest</a></li>
+        <li><a href="/archive/" {% if page.url == '/archive/' or page.url.startsWith('/type/') %}aria-current="page"{% endif %}>Archive</a></li>
         <li><a href="/tags/" {% if page.url == '/tags/' %}aria-current="page"{% endif %}>Tags</a></li>
         <li><a href="/search/" {% if page.url == '/search/' %}aria-current="page"{% endif %}>Search</a></li>
         <li><a href="/about/" {% if page.url == '/about/' %}aria-current="page"{% endif %}>About</a></li>
