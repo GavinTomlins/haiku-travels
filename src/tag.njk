@@ -1,0 +1,15 @@
+---
+layout: base.njk
+eleventyExcludeFromCollections: true
+pagination:
+  data: tags
+  size: 1
+  alias: t
+permalink: "/tag/{{ t.slug }}/"
+eleventyComputed:
+  title: "Tagged {{ t.label }}"
+  description: "Haiku tagged {{ t.label }} from {{ site.title }}."
+---
+<h1>Tagged <em>{{ t.label }}</em></h1>
+{% set list = t.haikus %}
+{% include "haiku-list.njk" %}

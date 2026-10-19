@@ -1,0 +1,14 @@
+---
+layout: base.njk
+title: Search
+permalink: /search/
+eleventyExcludeFromCollections: true
+---
+<h1>Search</h1>
+<form class="search" role="search" action="/search/" method="get">
+  <label for="q">Search poems, places and tags</label>
+  <input id="q" name="q" type="search" autocomplete="off" placeholder="rain, Kyoto, noodles…">
+</form>
+<p id="search-status" aria-live="polite"></p>
+<div id="search-results"></div>
+<script src="/js/search.js" defer></script>
