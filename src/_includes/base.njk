@@ -5,22 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% if title %}{{ title }} · {% endif %}{{ site.title }}</title>
   <meta name="description" content="{{ description or site.description }}">
-  <link rel="canonical" href="{{ page.url | absoluteUrl }}">
+  <link rel="canonical" href="{{ page.url | absolute }}">
   <meta property="og:site_name" content="{{ site.title }}">
   <meta property="og:type" content="{{ 'article' if haiku else 'website' }}">
   <meta property="og:title" content="{{ title or site.title }}">
   <meta property="og:description" content="{{ description or site.description }}">
-  <meta property="og:url" content="{{ page.url | absoluteUrl }}">
+  <meta property="og:url" content="{{ page.url | absolute }}">
   <meta name="twitter:card" content="summary">
+  <meta name="theme-color" content="#e8dcc2">
   <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="/feed.xml">
   <link rel="license" href="{{ site.license.url }}">
   <link rel="stylesheet" href="/css/site.css">
-  {% block head %}{% endblock %}
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-header">
     <a class="brand" href="/">{{ site.title }}</a>
+    <p class="tagline">{{ site.description }}</p>
     <nav aria-label="Main">
       <ul>
         <li><a href="/" {% if page.url == '/' %}aria-current="page"{% endif %}>All</a></li>
@@ -31,7 +32,7 @@
       </ul>
     </nav>
   </header>
-  <main id="main">
+  <main id="main" class="page">
     {{ content | safe }}
   </main>
   <footer class="site-footer">

@@ -1,5 +1,5 @@
 export const site = {
-  title: "Haiku Travels",
+  title: "Haiku-Travels",
   description: "Personal experiences, observations and reflections, expressed through haiku.",
   url: "https://haikutravels.xyz/",
   author: "Gavin Tomlins",

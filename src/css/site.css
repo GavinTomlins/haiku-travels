@@ -1,80 +1,150 @@
+/* Haiku-Travels: parchment, old-book typesetting, postcards. */
 :root {
-  --bg: #fbfaf7;
-  --fg: #23211d;
-  --muted: #6b665c;
-  --accent: #8a4b2a;
-  --rule: #e4e0d6;
-  --card: #ffffff;
-  --draft: #b45309;
-  --serif: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
-  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --bg: #d9c9a6;          /* desk / outer parchment */
+  --page: #f3e8d0;        /* the leaf */
+  --page-edge: #e6d6b4;
+  --fg: #2e2418;          /* ink */
+  --muted: #74624b;
+  --accent: #7d2e1e;      /* oxblood */
+  --rule: #c7b48c;
+  --mat: #f9f4e8;         /* postcard border */
+  --shadow: 52, 36, 12;
+  --draft: #a05a12;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, "Times New Roman", serif;
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #161513;
-    --fg: #ece8df;
-    --muted: #a39d90;
-    --accent: #e0a27c;
-    --rule: #2d2a25;
-    --card: #1e1c19;
-    --draft: #f59e0b;
-  }
-}
+
 * { box-sizing: border-box; }
-html { color-scheme: light dark; }
+html { color-scheme: light; }
 body {
   margin: 0;
-  background: var(--bg);
   color: var(--fg);
-  font-family: var(--sans);
-  line-height: 1.55;
+  font-family: var(--serif);
+  line-height: 1.6;
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse at 15% 10%, rgba(255, 250, 235, 0.35), transparent 55%),
+    radial-gradient(ellipse at 85% 95%, rgba(110, 70, 20, 0.18), transparent 50%),
+    radial-gradient(circle at 60% 45%, rgba(110, 70, 20, 0.08), transparent 45%),
+    repeating-linear-gradient(0deg, rgba(0,0,0,0.012) 0 2px, transparent 2px 4px);
   -webkit-font-smoothing: antialiased;
 }
-a { color: var(--accent); }
+a { color: var(--accent); text-underline-offset: 2px; }
 a:hover { text-decoration-thickness: 2px; }
-.skip { position: absolute; left: -999px; top: 0; background: var(--card); padding: .5rem 1rem; }
+.skip { position: absolute; left: -999px; top: 0; background: var(--page); padding: .5rem 1rem; }
 .skip:focus { left: 1rem; z-index: 10; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-.site-header, main, .site-footer { max-width: 40rem; margin: 0 auto; padding: 0 1rem; }
-.site-header { padding-top: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--rule); }
-.brand { font-family: var(--serif); font-size: 1.6rem; text-decoration: none; color: var(--fg); letter-spacing: .01em; }
-nav ul { list-style: none; margin: .75rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1rem; }
-nav a { color: var(--muted); text-decoration: none; font-size: .95rem; }
-nav a[aria-current="page"], nav a:hover { color: var(--fg); text-decoration: underline; }
+.site-header, main, .site-footer { max-width: 60rem; margin: 0 auto; padding-left: 1rem; padding-right: 1rem; }
+.site-header { text-align: center; padding-top: 2rem; padding-bottom: 1.25rem; }
+.brand {
+  display: inline-block;
+  font-size: 2.1rem;
+  font-variant: small-caps;
+  letter-spacing: .08em;
+  text-decoration: none;
+  color: var(--fg);
+}
+.tagline { margin: .2rem 0 0; color: var(--muted); font-style: italic; }
+nav ul { list-style: none; margin: 1rem 0 0; padding: .6rem 0 0; display: flex; flex-wrap: wrap; justify-content: center; gap: .25rem 1.25rem; border-top: 1px solid var(--rule); }
+nav a { color: var(--muted); text-decoration: none; font-variant: small-caps; letter-spacing: .06em; font-size: 1rem; }
+nav a[aria-current="page"], nav a:hover { color: var(--accent); }
 
-main { padding-top: 1.5rem; padding-bottom: 3rem; }
-h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.2; }
-h1 { font-size: 1.9rem; margin: 0 0 1rem; }
-.lede { color: var(--muted); margin-top: 0; }
-.year { font-size: 1.1rem; color: var(--muted); margin: 2rem 0 .5rem; border-bottom: 1px solid var(--rule); padding-bottom: .25rem; }
+/* The leaf of the book */
+main.page {
+  background: var(--page);
+  background-image:
+    radial-gradient(ellipse at 10% 0%, rgba(255,255,255,.5), transparent 50%),
+    radial-gradient(ellipse at 100% 100%, rgba(120, 80, 30, .10), transparent 50%);
+  border: 1px solid var(--rule);
+  outline: 1px solid var(--rule);
+  outline-offset: -8px;
+  box-shadow: 0 1px 0 rgba(var(--shadow), .15), 0 18px 40px -18px rgba(var(--shadow), .45);
+  padding: 2.25rem 2rem 2.5rem;
+  margin-bottom: 2.5rem;
+}
+@media (min-width: 44em) { main.page { padding: 3rem 3.5rem 3.5rem; } }
 
-.haiku-card { padding: 1rem 0; border-bottom: 1px solid var(--rule); }
-.haiku-card-title { font-size: 1.15rem; margin: 0 0 .5rem; }
+h1, h2, h3 { font-weight: 500; line-height: 1.2; }
+h1 { font-size: 2rem; margin: 0 0 .5rem; }
+.lede { margin: 0 0 1rem; text-align: center; font-style: italic; color: var(--muted); }
+.year { display: flex; align-items: center; gap: 1rem; font-size: 1rem; font-variant: small-caps; letter-spacing: .1em; color: var(--muted); margin: 2rem 0 .25rem; }
+.year::before, .year::after { content: ""; flex: 1; border-top: 1px solid var(--rule); }
+.empty { color: var(--muted); font-style: italic; }
+
+/* Index cards */
+.haiku-card { display: grid; grid-template-columns: 1fr; gap: 1.25rem; padding: 1.25rem 0; border-bottom: 1px dotted var(--rule); }
+.haiku-card.has-image { grid-template-columns: 1fr auto; align-items: center; }
+.haiku-card-title { font-size: 1.3rem; margin: 0 0 .4rem; }
 .haiku-card-title a { color: var(--fg); text-decoration: none; }
-.haiku-card-title a:hover { text-decoration: underline; }
-.poem { font-family: var(--serif); font-size: 1.15rem; line-height: 1.6; }
+.haiku-card-title a:hover { color: var(--accent); }
+.haiku-card-thumb { display: block; }
+.haiku-card-thumb .postcard { margin: 0; width: 12rem; transform: rotate(2deg); }
+.haiku-card-thumb .postcard img { aspect-ratio: 3 / 2; object-fit: cover; }
+@media (max-width: 36em) {
+  .haiku-card.has-image { grid-template-columns: 1fr; }
+  .haiku-card-thumb .postcard { width: 14rem; margin: .5rem auto 0; }
+}
+
+.poem { font-size: 1.2rem; line-height: 1.65; }
 .poem .line { display: block; }
-.poem-large { font-size: 1.6rem; line-height: 1.5; margin: 1.5rem 0; }
-.meta { color: var(--muted); font-size: .9rem; margin: .5rem 0 0; }
+.poem-large { font-size: 1.75rem; line-height: 1.5; margin: 1.5rem 0 1rem; font-style: italic; }
+.poem-large .line:first-child::first-letter { font-size: 1.35em; font-style: normal; }
+.meta { color: var(--muted); font-size: .95rem; margin: .4rem 0 0; }
 .meta a { color: inherit; }
 
-.haiku-page header h1 { margin-bottom: .25rem; }
-.haiku-figure { margin: 1.5rem 0; }
-.haiku-figure img { width: 100%; height: auto; border-radius: 4px; display: block; }
-.haiku-figure figcaption { color: var(--muted); font-size: .9rem; margin-top: .4rem; }
-.tags { display: flex; flex-wrap: wrap; gap: .4rem; }
-.tag { display: inline-block; background: var(--card); border: 1px solid var(--rule); border-radius: 999px; padding: .1rem .7rem; font-size: .85rem; text-decoration: none; color: var(--fg); }
-.tag:hover { border-color: var(--accent); }
-.tag-cloud { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem 1rem; }
-.tag-cloud .count { color: var(--muted); font-size: .85rem; }
-.attribution { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--rule); margin-top: 2rem; padding-top: 1rem; }
+/* A single poem's page */
+.folio { display: flex; justify-content: space-between; margin: -1rem 0 1.5rem; font-variant: small-caps; letter-spacing: .12em; font-size: .85rem; color: var(--muted); border-bottom: 1px solid var(--rule); padding-bottom: .4rem; }
+.spread { display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: center; }
+@media (min-width: 60em) {
+  .spread.has-postcard { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 3rem; }
+}
+.leaf header h1 { margin-bottom: .25rem; }
+.ornament { text-align: center; color: var(--accent); font-size: 1.4rem; margin: .5rem 0 1rem; }
+.tags { display: flex; flex-wrap: wrap; gap: .4rem; margin: 0; }
+.tag { display: inline-block; border: 1px solid var(--rule); border-radius: 2px; padding: .05rem .6rem; font-size: .85rem; font-variant: small-caps; letter-spacing: .06em; text-decoration: none; color: var(--fg); }
+.tag:hover { border-color: var(--accent); color: var(--accent); }
 
-.badge { font-family: var(--sans); font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; color: var(--draft); border: 1px solid currentColor; border-radius: 3px; padding: 0 .35rem; vertical-align: middle; }
+/* Postcards */
+.postcards { display: grid; gap: 2rem; }
+.postcard {
+  margin: 1rem auto;
+  max-width: 28rem;
+  padding: .75rem .75rem 1.1rem;
+  background: var(--mat);
+  color: #4a3b2a;
+  box-shadow: 0 1px 2px rgba(var(--shadow), .25), 0 14px 28px -10px rgba(var(--shadow), .5);
+  transform: rotate(-2deg);
+  transition: transform .25s ease;
+}
+.postcards .postcard:nth-child(even) { transform: rotate(1.5deg); }
+.postcard:hover { transform: rotate(0deg) scale(1.01); }
+.postcard img { display: block; width: 100%; height: auto; }
+.postcard figcaption { margin-top: .5rem; font-size: .9rem; font-style: italic; text-align: center; }
+@media (min-width: 60em) { .postcards .postcard { margin: 0 0 0 auto; } }
+
+/* Page turning */
+.page-turn { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1rem; margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--rule); }
+.turn { text-decoration: none; color: var(--fg); display: flex; flex-direction: column; min-width: 0; }
+.turn-prev { text-align: left; }
+.turn-next { text-align: right; }
+.turn-label { font-variant: small-caps; letter-spacing: .1em; font-size: .8rem; color: var(--muted); }
+.turn-prev .turn-label::before { content: "← "; }
+.turn-next .turn-label::after { content: " →"; }
+.turn-title { font-style: italic; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.turn:hover .turn-title { color: var(--accent); }
+.turn-index { font-variant: small-caps; letter-spacing: .1em; color: var(--muted); font-size: .85rem; }
+@media (max-width: 36em) { .page-turn { grid-template-columns: 1fr 1fr; } .turn-index { grid-column: 1 / -1; text-align: center; order: 3; } }
+
+.attribution { color: var(--muted); font-size: .85rem; margin-top: 1.5rem; }
+
+.badge { font-size: .7rem; font-variant: normal; text-transform: uppercase; letter-spacing: .08em; color: var(--draft); border: 1px solid currentColor; border-radius: 3px; padding: 0 .35rem; vertical-align: middle; }
 .is-draft { outline: 1px dashed var(--draft); outline-offset: .5rem; }
 
-.search label { display: block; margin-bottom: .4rem; color: var(--muted); }
-.search input { width: 100%; font: inherit; padding: .6rem .8rem; border: 1px solid var(--rule); border-radius: 6px; background: var(--card); color: var(--fg); }
+.tag-cloud { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem 1rem; }
+.tag-cloud .count { color: var(--muted); font-size: .85rem; }
+
+.search label { display: block; margin-bottom: .4rem; color: var(--muted); font-style: italic; }
+.search input { width: 100%; font: inherit; padding: .6rem .8rem; border: 1px solid var(--rule); border-radius: 2px; background: var(--mat); color: #2e2418; }
 .search input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
 
-.site-footer { border-top: 1px solid var(--rule); padding-top: 1rem; padding-bottom: 2rem; color: var(--muted); font-size: .85rem; }
+.site-footer { text-align: center; padding-bottom: 2.5rem; color: var(--muted); font-size: .85rem; }

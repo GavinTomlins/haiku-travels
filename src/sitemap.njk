@@ -4,17 +4,17 @@ eleventyExcludeFromCollections: true
 ---
 <?xml version="1.0" encoding="utf-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>{{ "/" | absoluteUrl }}</loc></url>
-  <url><loc>{{ "/about/" | absoluteUrl }}</loc></url>
-  <url><loc>{{ "/tags/" | absoluteUrl }}</loc></url>
-  <url><loc>{{ "/search/" | absoluteUrl }}</loc></url>
+  <url><loc>{{ "/" | absolute }}</loc></url>
+  <url><loc>{{ "/about/" | absolute }}</loc></url>
+  <url><loc>{{ "/tags/" | absolute }}</loc></url>
+  <url><loc>{{ "/search/" | absolute }}</loc></url>
 {%- for t in types %}
-  <url><loc>{{ ("/type/" + t.slug + "/") | absoluteUrl }}</loc></url>
+  <url><loc>{{ ("/type/" + t.slug + "/") | absolute }}</loc></url>
 {%- endfor %}
 {%- for t in tags %}
-  <url><loc>{{ ("/tag/" + t.slug + "/") | absoluteUrl }}</loc></url>
+  <url><loc>{{ ("/tag/" + t.slug + "/") | absolute }}</loc></url>
 {%- endfor %}
 {%- for h in haikus %}
-  <url><loc>{{ h.url | absoluteUrl }}</loc><lastmod>{{ h.updated or h.date }}</lastmod></url>
+  <url><loc>{{ h.url | absolute }}</loc><lastmod>{{ h.updated or h.date }}</lastmod></url>
 {%- endfor %}
 </urlset>
