@@ -1,0 +1,25 @@
+{
+  "name": "haiku-travels",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Static site for haikutravels.xyz",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "build": "rm -rf _site && eleventy",
+    "dev": "rm -rf _site && HAIKU_INCLUDE_DRAFTS=1 eleventy --serve",
+    "check:leaks": "node scripts/check-leaks.mjs",
+    "validate:content": "npm --prefix content run validate",
+    "verify": "npm run build && npm run check:leaks"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.2",
+    "@11ty/eleventy-img": "^6.0.4",
+    "@11ty/eleventy-plugin-rss": "^2.0.4",
+    "gray-matter": "^4.0.3",
+    "js-yaml": "^4.1.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

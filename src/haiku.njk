@@ -1,0 +1,52 @@
+---
+layout: base.njk
+tags: poems
+pagination:
+  data: haikus
+  size: 1
+  alias: h
+  addAllPagesToCollections: true
+permalink: "/haiku/{{ h.id }}/"
+eleventyComputed:
+  title: "{{ h.title }}"
+  date: "{{ h.date }}"
+  lang: "{{ h.language }}"
+  haiku: "{{ h.id }}"
+  description: "{{ h.lines | join(' / ') }}"
+---
+{% block head %}{% endblock %}
+<article class="haiku-page{% if h.status == 'draft' %} is-draft{% endif %}">
+  <header>
+    <h1>{{ h.title }}{% if h.status == 'draft' %} <span class="badge">draft</span>{% endif %}</h1>
+    <p class="meta">
+      <time datetime="{{ h.date }}">{{ h.date | readableDate }}</time>
+      · <a href="/type/{{ h.type }}/">{{ h.type }}</a>
+      {% if h.location %}· {{ h.location.name }}{% if h.location.country %}, {{ h.location.country }}{% endif %}{% endif %}
+    </p>
+  </header>
+  <div class="poem poem-large" lang="{{ h.language }}">{% for line in h.lines %}<span class="line">{{ line }}</span>{% endfor %}</div>
+  {% for img in h.images %}{% haikuImage img %}{% endfor %}
+  {% if h.tags.length %}
+  <p class="tags">{% for t in h.tags %}<a class="tag" href="/tag/{{ t }}/">{{ t }}</a>{% endfor %}</p>
+  {% endif %}
+  <footer class="attribution">
+    <p>“{{ h.title }}” by {{ h.author }} is licensed under <a href="{{ site.license.url }}" rel="license">{{ site.license.short }}</a>.
+    Canonical: <a href="{{ h.url | absoluteUrl }}">{{ h.url | absoluteUrl }}</a>.
+    {% if h.updated %}Updated <time datetime="{{ h.updated }}">{{ h.updated | readableDate }}</time>.{% endif %}</p>
+  </footer>
+</article>
+<script type="application/ld+json">{{ {
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "genre": "haiku",
+  "headline": h.title,
+  "text": h.lines | join("\n"),
+  "author": { "@type": "Person", "name": h.author },
+  "datePublished": h.date,
+  "dateModified": h.updated or h.date,
+  "inLanguage": h.language,
+  "url": h.url | absoluteUrl,
+  "license": site.license.url,
+  "keywords": h.tags | join(", "),
+  "isPartOf": { "@type": "WebSite", "name": site.title, "url": site.url }
+} | jsonld | safe }}</script>

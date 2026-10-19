@@ -1,0 +1,10 @@
+---
+layout: base.njk
+title: Tags
+permalink: /tags/
+eleventyExcludeFromCollections: true
+---
+<h1>Tags</h1>
+<ul class="tag-cloud">
+{% for t in tags %}<li><a class="tag" href="/tag/{{ t.slug }}/">{{ t.label }}</a> <span class="count">{{ t.haikus.length }}</span></li>{% endfor %}
+</ul>

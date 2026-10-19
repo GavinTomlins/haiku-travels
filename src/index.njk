@@ -1,0 +1,8 @@
+---
+layout: base.njk
+eleventyExcludeFromCollections: true
+---
+<h1 class="visually-hidden">{{ site.title }}</h1>
+<p class="lede">{{ site.description }}</p>
+{% set list = haikus %}
+{% include "haiku-list.njk" %}

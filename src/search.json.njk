@@ -1,0 +1,9 @@
+---
+permalink: /search.json
+eleventyExcludeFromCollections: true
+---
+[{% for h in haikus %}{{ {
+  "id": h.id, "title": h.title, "date": h.date, "type": h.type, "tags": h.tags,
+  "text": h.lines | join(" / "), "url": h.url,
+  "location": (h.location.name + (", " + h.location.country if h.location.country else "")) if h.location else null
+} | jsonld | safe }}{% if not loop.last %},{% endif %}{% endfor %}]

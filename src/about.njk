@@ -1,0 +1,24 @@
+---
+layout: base.njk
+title: About
+permalink: /about/
+eleventyExcludeFromCollections: true
+---
+<h1>About</h1>
+<p>{{ site.description }} Written by {{ site.author }}, one poem per moment, filed by the day it happened.</p>
+
+<h2 id="licence">Licence and permissions</h2>
+<p>The haiku on this site are © {{ site.author }} and licensed under the
+<a href="{{ site.license.url }}" rel="license">{{ site.license.name }}</a> ({{ site.license.short }}).</p>
+<p>You may copy and share any poem unchanged for non-commercial purposes, as long as you credit
+<strong>{{ site.author }}</strong> and link to <a href="{{ site.url }}">haikutravels.xyz</a>. You may not sell the poems,
+include them in commercial publications, products or services, or publish adaptations or translations
+without permission.</p>
+<p>Commercial use, adaptations and translations can be licensed separately, including on a fee or royalty basis.
+Write to <a href="mailto:{{ site.contactEmail }}">{{ site.contactEmail }}</a>.</p>
+<p>Photographs are © {{ site.author }} unless a caption says otherwise and are not covered by the poems' licence.</p>
+
+<h2>Colophon</h2>
+<p>A static site built with Eleventy and served by Cloudflare Pages. No cookies, no trackers, no accounts.
+The <a href="https://github.com/GavinTomlins/haiku-travels">site code</a> is MIT licensed; the
+<a href="https://github.com/GavinTomlins/haiku-travels-content">poems</a> are {{ site.license.short }}.</p>
