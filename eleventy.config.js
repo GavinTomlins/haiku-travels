@@ -8,6 +8,7 @@ export default function (eleventyConfig) {
     "src/js": "js",
     "src/fonts": "fonts",
     "src/favicon.svg": "favicon.svg",
+    "src/img": "img",
     "src/_headers": "_headers",
     "src/robots.txt": "robots.txt",
   });
@@ -25,7 +26,7 @@ export default function (eleventyConfig) {
 
   // Responsive images from the content repository's media folder.
   // Pass eager=true for an image that is visible on first paint (the poem's first postcard).
-  eleventyConfig.addAsyncShortcode("haikuImage", async (img, sizes = "(min-width: 44em) 40em, calc(100vw - 2rem)", eager = false, widths = [400, 800, 1600]) => {
+  eleventyConfig.addAsyncShortcode("haikuImage", async (img, sizes = "(min-width: 44em) 40em, calc(100vw - 2rem)", eager = false, widths = [400, 800, 1600], note = "") => {
     if (!img) return "";
     const metadata = await Image(img.path, {
       widths,
@@ -36,7 +37,19 @@ export default function (eleventyConfig) {
     const loading = eager ? { loading: "eager", fetchpriority: "high" } : { loading: "lazy" };
     const html = Image.generateHTML(metadata, { alt: img.alt, sizes, ...loading, decoding: "async" });
     const caption = img.caption ? `<figcaption>${escapeHtml(img.caption)}${img.credit ? ` (${escapeHtml(img.credit)})` : ""}</figcaption>` : "";
-    return `<figure class="postcard">${html}${caption}</figure>`;
+    const noteHtml = note ? `<figcaption class="postcard-note">${escapeHtml(note)}</figcaption>` : "";
+    const marks = `<span class="stamp" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20l5-9 4 6 3-4 6 7z"/><circle cx="17" cy="6" r="2.5"/></svg></span><span class="postmark" aria-hidden="true"><span>Haiku<br>Travels</span></span>`;
+    return `<figure class="postcard">${marks}${html}${caption}${noteHtml}</figure>`;
+  });
+
+  // Full-bleed background image for the illustration-first style (D). Hidden in other styles.
+  eleventyConfig.addShortcode("haikuHero", (img) => {
+    if (!img) return "";
+    const options = { widths: [1600], formats: ["jpeg"], outputDir: "./_site/img/", urlPath: "/img/" };
+    Image(img.path, options);
+    const metadata = Image.statsSync(img.path, options);
+    const src = metadata.jpeg[0].url;
+    return `<img class="hero-img" src="${src}" alt="" aria-hidden="true" loading="lazy" decoding="async">`;
   });
 
   // Synchronous variant for use inside loops (Nunjucks cannot await inside {% for %}).

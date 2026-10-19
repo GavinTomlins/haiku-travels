@@ -1,4 +1,6 @@
-<article class="haiku-page{% if h.status == 'draft' %} is-draft{% endif %}">
+{% set note = (h.location.name + ", " if h.location else "") + (h.date | readableDate) %}
+<article class="haiku-page{% if h.status == 'draft' %} is-draft{% endif %}" data-type="{{ h.type }}">
+  {% if h.images.length %}{% haikuHero h.images[0] %}{% endif %}
   <p class="folio"><span class="folio-site">{{ site.title }}</span><span class="folio-num">{% if h.number %}No. {{ h.number }} of {{ total }}{% else %}Draft{% endif %}</span></p>
   <div class="spread{% if h.images.length %} has-postcard{% endif %}">
     <div class="leaf">
@@ -16,7 +18,7 @@
     </div>
     {% if h.images.length %}
     <aside class="postcards">
-      {% for img in h.images %}{% haikuImage img, "(min-width: 60em) 26rem, calc(100vw - 4rem)", loop.first %}{% endfor %}
+      {% for img in h.images %}{% haikuImage img, "(min-width: 60em) 26rem, calc(100vw - 4rem)", loop.first, [400, 800, 1600], note %}{% endfor %}
     </aside>
     {% endif %}
   </div>
