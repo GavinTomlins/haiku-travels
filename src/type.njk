@@ -10,6 +10,7 @@ eleventyComputed:
   title: "{{ t.label }}"
   description: "Haiku about {{ t.label | lower }} from {{ site.title }}."
 ---
-<h1>{{ t.label }}</h1>
+<h1 class="archive-title">{{ t.label }}</h1>
+<p class="lede"><a href="/archive/">All poems</a> · {% for x in site.types %}{% if x.slug != t.slug %}<a class="tag" href="/type/{{ x.slug }}/">{{ x.label }}</a>{% endif %}{% endfor %}</p>
 {% set list = t.haikus %}
 {% include "haiku-list.njk" %}

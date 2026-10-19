@@ -1,0 +1,48 @@
+<article class="haiku-page{% if h.status == 'draft' %} is-draft{% endif %}">
+  <p class="folio"><span class="folio-site">{{ site.title }}</span><span class="folio-num">No. {{ number }}</span></p>
+  <div class="spread{% if h.images.length %} has-postcard{% endif %}">
+    <div class="leaf">
+      <header class="poem-header">
+        <h1 class="poem-title">{{ h.title }}{% if h.status == 'draft' %} <span class="badge">draft</span>{% endif %}</h1>
+        <p class="meta">
+          <time datetime="{{ h.date }}">{{ h.date | readableDate }}</time>
+          {% if h.location %}· {{ h.location.name }}{% if h.location.country %}, {{ h.location.country }}{% endif %}{% endif %}
+        </p>
+      </header>
+      <div class="poem poem-large" lang="{{ h.language }}">{% for line in h.lines %}<span class="line">{{ line }}</span>{% endfor %}</div>
+      <p class="ornament" aria-hidden="true">❦</p>
+      <p class="tags"><a class="tag" href="/type/{{ h.type }}/">{{ h.type }}</a>{% for t in h.tags %}<a class="tag" href="/tag/{{ t }}/">{{ t }}</a>{% endfor %}</p>
+    </div>
+    {% if h.images.length %}
+    <aside class="postcards">
+      {% for img in h.images %}{% haikuImage img, "(min-width: 60em) 26rem, calc(100vw - 4rem)" %}{% endfor %}
+    </aside>
+    {% endif %}
+  </div>
+  <nav class="page-turn" aria-label="Previous and next poem">
+    {% if newer %}<a class="turn-btn turn-prev" href="{{ newer.url }}" rel="prev" title="Newer: {{ newer.title }}"><span class="turn-arrow" aria-hidden="true">‹</span><span class="turn-text"><span class="turn-label">Newer</span><span class="turn-title">{{ newer.title }}</span></span></a>{% else %}<span class="turn-btn turn-prev is-empty" aria-hidden="true"></span>{% endif %}
+    <a class="turn-index" href="/archive/">Archive</a>
+    {% if older %}<a class="turn-btn turn-next" href="{{ older.url }}" rel="next" title="Older: {{ older.title }}"><span class="turn-text"><span class="turn-label">Older</span><span class="turn-title">{{ older.title }}</span></span><span class="turn-arrow" aria-hidden="true">›</span></a>{% else %}<span class="turn-btn turn-next is-empty" aria-hidden="true"></span>{% endif %}
+  </nav>
+  <footer class="attribution">
+    <p>“{{ h.title }}” by {{ h.author }} is licensed under <a href="{{ site.license.url }}" rel="license">{{ site.license.short }}</a>.
+    Canonical: <a href="{{ h.url | absolute }}">{{ h.url | absolute }}</a>.
+    {% if h.updated %}Updated <time datetime="{{ h.updated }}">{{ h.updated | readableDate }}</time>.{% endif %}</p>
+  </footer>
+</article>
+<script src="/js/page-turn.js?v={{ assets.pageTurn }}" defer></script>
+<script type="application/ld+json">{{ {
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "genre": "haiku",
+  "headline": h.title,
+  "text": h.lines | join("\n"),
+  "author": { "@type": "Person", "name": h.author },
+  "datePublished": h.date,
+  "dateModified": h.updated or h.date,
+  "inLanguage": h.language,
+  "url": h.url | absolute,
+  "license": site.license.url,
+  "keywords": h.tags | join(", "),
+  "isPartOf": { "@type": "WebSite", "name": site.title, "url": site.url }
+} | jsonld | safe }}</script>
