@@ -1,9 +1,12 @@
-<article class="haiku-card{% if h.status == 'draft' %} is-draft{% endif %}">
-  <h3 class="haiku-card-title"><a href="{{ h.url }}">{{ h.title }}</a>{% if h.status == 'draft' %} <span class="badge">draft</span>{% endif %}</h3>
-  <div class="poem" lang="{{ h.language }}">{% for line in h.lines %}<span class="line">{{ line }}</span>{% endfor %}</div>
-  <p class="meta">
-    <time datetime="{{ h.date }}">{{ h.date | readableDate }}</time>
-    · <a href="/type/{{ h.type }}/">{{ h.type }}</a>
-    {% if h.location %}· {{ h.location.name }}{% if h.location.country %}, {{ h.location.country }}{% endif %}{% endif %}
-  </p>
+<article class="haiku-card{% if h.status == 'draft' %} is-draft{% endif %}{% if h.images.length %} has-image{% endif %}">
+  <div class="haiku-card-text">
+    <h3 class="haiku-card-title"><a href="{{ h.url }}">{{ h.title }}</a>{% if h.status == 'draft' %} <span class="badge">draft</span>{% endif %}</h3>
+    <div class="poem" lang="{{ h.language }}">{% for line in h.lines %}<span class="line">{{ line }}</span>{% endfor %}</div>
+    <p class="meta">
+      <time datetime="{{ h.date }}">{{ h.date | readableDate }}</time>
+      · <a href="/type/{{ h.type }}/">{{ h.type }}</a>
+      {% if h.location %}· {{ h.location.name }}{% if h.location.country %}, {{ h.location.country }}{% endif %}{% endif %}
+    </p>
+  </div>
+  {% if h.images.length %}<a class="haiku-card-thumb" href="{{ h.url }}" tabindex="-1" aria-hidden="true">{% haikuThumb h.images[0] %}</a>{% endif %}
 </article>

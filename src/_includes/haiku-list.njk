@@ -1,10 +1,6 @@
-{% set currentYear = '' %}
-{% for h in list %}
-  {% if (h.date | year) != currentYear %}
-    {% set currentYear = h.date | year %}
-    <h2 class="year">{{ currentYear }}</h2>
-  {% endif %}
-  {% include "haiku-card.njk" %}
+{% for group in list | byYear %}
+  <h2 class="year"><span>{{ group.year }}</span></h2>
+  {% for h in group.haikus %}{% include "haiku-card.njk" %}{% endfor %}
 {% else %}
-  <p>No poems here yet.</p>
+  <p class="empty">No poems here yet.</p>
 {% endfor %}
