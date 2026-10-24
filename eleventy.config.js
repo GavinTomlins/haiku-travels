@@ -1,3 +1,4 @@
+import path from "node:path";
 import Image from "@11ty/eleventy-img";
 import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 import { site } from "./src/_lib/site.js";
@@ -24,16 +25,22 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("absolute", (u) => new URL(u, site.url).href);
   eleventyConfig.addFilter("jsonld", (o) => JSON.stringify(o).replace(/</g, "\\u003c"));
 
+  // Every generated image keeps the copyright stamp the content repository writes into the
+  // source (EXIF and XMP), and is served under the source's name rather than a hash:
+  // HaikuTravels-caravan-wave-800.webp. The content validator keeps those names unique.
+  const imageOptions = (extra) => ({
+    outputDir: "./_site/img/",
+    urlPath: "/img/",
+    filenameFormat: (id, src, width, format) => `${path.basename(src).replace(/\.[^.]+$/, "")}-${width}.${format}`,
+    transform: (sharp) => sharp.keepMetadata(),
+    ...extra,
+  });
+
   // Responsive images from the content repository's media folder.
   // Pass eager=true for an image that is visible on first paint (the poem's first postcard).
   eleventyConfig.addAsyncShortcode("haikuImage", async (img, sizes = "(min-width: 44em) 40em, calc(100vw - 2rem)", eager = false, widths = [400, 800, 1600], note = "") => {
     if (!img) return "";
-    const metadata = await Image(img.path, {
-      widths,
-      formats: ["webp", "jpeg"],
-      outputDir: "./_site/img/",
-      urlPath: "/img/",
-    });
+    const metadata = await Image(img.path, imageOptions({ widths, formats: ["webp", "jpeg"] }));
     const loading = eager ? { loading: "eager", fetchpriority: "high" } : { loading: "lazy" };
     const html = Image.generateHTML(metadata, { alt: img.alt, sizes, ...loading, decoding: "async" });
     const caption = img.caption ? `<figcaption>${escapeHtml(img.caption)}${img.credit ? ` (${escapeHtml(img.credit)})` : ""}</figcaption>` : "";
@@ -45,7 +52,7 @@ export default function (eleventyConfig) {
   // Full-bleed background image for the illustration-first style (D). Hidden in other styles.
   eleventyConfig.addShortcode("haikuHero", (img) => {
     if (!img) return "";
-    const options = { widths: [1600], formats: ["jpeg"], outputDir: "./_site/img/", urlPath: "/img/" };
+    const options = imageOptions({ widths: [1600], formats: ["jpeg"] });
     Image(img.path, options);
     const metadata = Image.statsSync(img.path, options);
     const src = metadata.jpeg[0].url;
@@ -56,7 +63,7 @@ export default function (eleventyConfig) {
   // Generation runs in the background; stats are available immediately.
   eleventyConfig.addShortcode("haikuThumb", (img, sizes = "12rem", widths = [400, 800]) => {
     if (!img) return "";
-    const options = { widths, formats: ["webp", "jpeg"], outputDir: "./_site/img/", urlPath: "/img/" };
+    const options = imageOptions({ widths, formats: ["webp", "jpeg"] });
     Image(img.path, options);
     const metadata = Image.statsSync(img.path, options);
     const html = Image.generateHTML(metadata, { alt: img.alt, sizes, loading: "lazy", decoding: "async" });
@@ -66,7 +73,7 @@ export default function (eleventyConfig) {
   // A 1200px JPEG of a poem's first image, for og:image. Generated in the background like haikuThumb.
   eleventyConfig.addFilter("ogImage", (img) => {
     if (!img) return null;
-    const options = { widths: [1200], formats: ["jpeg"], outputDir: "./_site/img/", urlPath: "/img/" };
+    const options = imageOptions({ widths: [1200], formats: ["jpeg"] });
     Image(img.path, options);
     return Image.statsSync(img.path, options).jpeg[0];
   });
