@@ -306,7 +306,7 @@ h1 { font-size: 2rem; margin: 0 0 .5rem; }
 
 
 /* ---------- Review variants. The default above is style A. ---------- */
-/* The variants are day-time looks: in the night edition only the picker and the page-turn motion apply. */
+/* The variants are complete day-time looks: choosing one overrides the night edition as well. */
 @font-face { font-family: "Homemade Apple"; font-style: normal; font-weight: 400; font-display: swap; src: url("/fonts/homemade-apple-400.woff2") format("woff2"); }
 
 .svg-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
@@ -326,16 +326,22 @@ h1 { font-size: 2rem; margin: 0 0 .5rem; }
 @keyframes ht-fade-in { from { opacity: 0; transform: translateX(12px); } }
 @media (prefers-reduced-motion: reduce) { ::view-transition-old(root), ::view-transition-new(root) { animation: none; } }
 
-@media (prefers-color-scheme: light) {
 /* B: paper texture, deckled edge */
 :root[data-style="b"], :root[data-style="c"], :root[data-style="d"] {
   --bg: #d6c4a0;
   --page: #f1e5cb;
+  --page-edge: #e6d6b4;
   --fg: #2b2116;
   --muted: #6f5d45;
+  --accent: #7d2e1e;
   --rule: #bda77f;
   --mat: #faf5ea;
+  --field: #faf5ea;
+  --placeholder: #e4dac6;
+  --shadow: 52, 36, 12;
+  --draft: #a05a12;
 }
+:root[data-style="b"] .postcard, :root[data-style="c"] .postcard, :root[data-style="d"] .postcard { color: #4a3b2a; }
 :root[data-style="b"] body, :root[data-style="c"] body, :root[data-style="d"] body {
   font-size: 1.06rem;
   background-image: url("/img/paper-noise.svg"), radial-gradient(ellipse at 15% 10%, rgba(255,250,235,.35), transparent 55%), radial-gradient(ellipse at 85% 95%, rgba(110,70,20,.18), transparent 50%);
@@ -409,5 +415,4 @@ h1 { font-size: 2rem; margin: 0 0 .5rem; }
   :root[data-style="d"] main.page { margin-left: 1rem; margin-right: 1rem; max-width: none; }
   :root[data-style="d"] .site-header { grid-template-columns: 1fr; }
   :root[data-style="d"] .site-header nav ul { justify-content: flex-start; }
-}
 }
