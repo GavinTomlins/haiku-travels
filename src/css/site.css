@@ -248,6 +248,32 @@ h1 { font-size: 2rem; margin: 0 0 .5rem; }
 
 .site-footer { text-align: center; padding-bottom: 2.5rem; color: var(--muted); font-size: .95rem; }
 
+/* About: a hero postcard, then the note beside a small portrait */
+.about-hero { margin: 0 0 2rem; }
+.about-hero .postcard { max-width: none; margin: 0; transform: rotate(-.8deg); }
+.about-tagline { margin: 1.5rem 0 0; text-align: center; font-style: italic; font-size: 1.3rem; }
+.about-columns { display: flex; flex-wrap: wrap; gap: 2rem 3rem; align-items: flex-start; }
+.about-main { flex: 1 1 26rem; min-width: 0; }
+.about-main .poem-title { margin: .5rem 0 1rem; }
+.epigraph { margin: 0 0 1.5rem; padding-left: 1.25rem; border-left: 2px solid var(--rule); }
+.epigraph .poem { font-size: 1.5rem; line-height: 1.45; }
+.epigraph-credit { margin: .5rem 0 0; font-variant: small-caps; letter-spacing: .12em; font-size: .9rem; color: var(--muted); }
+.epigraph-credit a { color: inherit; }
+.about-intro { font-size: 1.45rem; line-height: 1.4; margin: 0 0 1rem; }
+.signature { display: flex; align-items: center; gap: 1rem; margin: 2rem 0 .5rem; color: var(--accent); }
+.signature .emblem { display: block; width: 4rem; height: 4rem; flex: none; }
+.signature-name { font-style: italic; font-size: 1.25rem; color: var(--fg); }
+.about-aside { flex: 0 0 220px; font-size: .95rem; padding-top: 1rem; }
+.about-aside .postcard { width: 100px; max-width: none; margin: 0 0 1rem .35rem; padding: 6px; transform: rotate(2deg); }
+.about-aside .postcard img { width: 100px; height: 100px; object-fit: cover; }
+.about-name { margin: 0 0 .5rem; font-variant: small-caps; letter-spacing: .1em; font-size: 1.05rem; }
+.about-bio { margin: 0 0 .75rem; font-style: italic; color: var(--muted); }
+.about-links { margin: 0; }
+.licence { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); }
+.licence h2 { font-variant: small-caps; letter-spacing: .1em; font-size: 1.35rem; margin: 0 0 .75rem; }
+.licence p { font-size: 1.05rem; margin: 0 0 .75rem; }
+.licence .fine { font-size: .9rem; color: var(--muted); }
+
 /* Night edition: the same book under a lamp. Postcards stay paper-coloured. */
 @media (prefers-color-scheme: dark) {
   :root {
