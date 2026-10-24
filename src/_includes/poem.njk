@@ -10,7 +10,7 @@
         </p>
       </header>
       <div class="poem poem-large chars-{{ h.longest }}" lang="{{ h.language }}">{% for line in h.lines %}<span class="line">{{ line }}</span>{% if not loop.last %}<br>{% endif %}{% endfor %}</div>
-      <p class="ornament" aria-hidden="true">❦</p>
+      <p class="ornament" aria-hidden="true">{% include "emblem.svg.njk" %}</p>
       <p class="tags"><a class="tag" href="/type/{{ h.type }}/">{{ h.type }}</a>{% for t in h.tags %}<a class="tag" href="/tag/{{ t }}/">{{ t }}</a>{% endfor %}</p>
       <div class="poem-actions" data-title="{{ h.title }}" data-author="{{ h.author }}" data-url="{{ h.url | absolute }}"></div>
     </div>
