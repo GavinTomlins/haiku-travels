@@ -7,12 +7,11 @@
   eleventyComputed: {
     haiku: (data) => data.h?.id,
     lang: (data) => data.h?.language,
-    description: (data) => data.h ? data.h.lines.join(" / ") : data.site.description,
-    canonical: (data) => data.h?.url,
   },
 }
 ---
 {% set newer = null %}
 {% set older = haikus[1] if haikus.length > 1 else null %}
 {% set number = haikus.length %}
+{% set total = haikus.length %}
 {% include "poem.njk" %}
