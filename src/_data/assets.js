@@ -6,4 +6,5 @@ export default {
   css: hash("src/css/site.css"),
   search: hash("src/js/search.js"),
   pageTurn: hash("src/js/page-turn.js"),
+  poemActions: hash("src/js/poem-actions.js"),
 };

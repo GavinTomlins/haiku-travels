@@ -6,6 +6,8 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({
     "src/css": "css",
     "src/js": "js",
+    "src/fonts": "fonts",
+    "src/favicon.svg": "favicon.svg",
     "src/_headers": "_headers",
     "src/robots.txt": "robots.txt",
   });
@@ -16,11 +18,13 @@ export default function (eleventyConfig) {
     new Date(`${s}T00:00:00Z`).toLocaleDateString("en-AU", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }),
   );
   eleventyConfig.addFilter("year", (s) => String(s).slice(0, 4));
+  eleventyConfig.addFilter("published", (list) => list.filter((h) => h.status === "published"));
   eleventyConfig.addFilter("absolute", (u) => new URL(u, site.url).href);
   eleventyConfig.addFilter("jsonld", (o) => JSON.stringify(o).replace(/</g, "\\u003c"));
 
   // Responsive images from the content repository's media folder.
-  eleventyConfig.addAsyncShortcode("haikuImage", async (img, sizes = "(min-width: 44em) 40em, calc(100vw - 2rem)", widths = [400, 800, 1600]) => {
+  // Pass eager=true for an image that is visible on first paint (the poem's first postcard).
+  eleventyConfig.addAsyncShortcode("haikuImage", async (img, sizes = "(min-width: 44em) 40em, calc(100vw - 2rem)", eager = false, widths = [400, 800, 1600]) => {
     if (!img) return "";
     const metadata = await Image(img.path, {
       widths,
@@ -28,7 +32,8 @@ export default function (eleventyConfig) {
       outputDir: "./_site/img/",
       urlPath: "/img/",
     });
-    const html = Image.generateHTML(metadata, { alt: img.alt, sizes, loading: "lazy", decoding: "async" });
+    const loading = eager ? { loading: "eager", fetchpriority: "high" } : { loading: "lazy" };
+    const html = Image.generateHTML(metadata, { alt: img.alt, sizes, ...loading, decoding: "async" });
     const caption = img.caption ? `<figcaption>${escapeHtml(img.caption)}${img.credit ? ` (${escapeHtml(img.credit)})` : ""}</figcaption>` : "";
     return `<figure class="postcard">${html}${caption}</figure>`;
   });
@@ -42,6 +47,14 @@ export default function (eleventyConfig) {
     const metadata = Image.statsSync(img.path, options);
     const html = Image.generateHTML(metadata, { alt: img.alt, sizes, loading: "lazy", decoding: "async" });
     return `<figure class="postcard">${html}</figure>`;
+  });
+
+  // A 1200px JPEG of a poem's first image, for og:image. Generated in the background like haikuThumb.
+  eleventyConfig.addFilter("ogImage", (img) => {
+    if (!img) return null;
+    const options = { widths: [1200], formats: ["jpeg"], outputDir: "./_site/img/", urlPath: "/img/" };
+    Image(img.path, options);
+    return Image.statsSync(img.path, options).jpeg[0];
   });
 
   // Group a sorted list of poems into [{ year, haikus }] for the index pages.

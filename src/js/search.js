@@ -25,6 +25,7 @@
       h.text.split(" / ").forEach(function (line) {
         var span = document.createElement("span");
         span.className = "line"; span.textContent = line;
+        if (poem.childNodes.length) poem.appendChild(document.createElement("br"));
         poem.appendChild(span);
       });
       var meta = document.createElement("p");

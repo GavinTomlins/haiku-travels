@@ -4,7 +4,8 @@ title: Tags
 permalink: /tags/
 eleventyExcludeFromCollections: true
 ---
-<h1>Tags</h1>
+<h1 class="archive-title">Tags</h1>
+<p class="lede">Most used first.</p>
 <ul class="tag-cloud">
-{% for t in tags %}<li><a class="tag" href="/tag/{{ t.slug }}/">{{ t.label }}</a> <span class="count">{{ t.haikus.length }}</span></li>{% endfor %}
+{% for t in tags %}<li><a class="tag" href="/tag/{{ t.slug }}/">{{ t.label }} <span class="count">{{ t.haikus.length }}</span></a></li>{% endfor %}
 </ul>

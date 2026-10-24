@@ -53,6 +53,7 @@ export function toPublic({ fm, lines }) {
   }));
   return {
     id: fm.id,
+    number: null,
     title: fm.title,
     date: fm.date,
     created: fm.created ?? null,
@@ -61,6 +62,7 @@ export function toPublic({ fm, lines }) {
     tags: [...(fm.tags ?? [])].sort(),
     status: fm.status,
     author: fm.author,
+    initials: initialsOf(fm.author),
     order: Number.isInteger(fm.order) ? fm.order : null,
     language: fm.language ?? "en",
     collections: fm.collections ?? [],
@@ -71,19 +73,34 @@ export function toPublic({ fm, lines }) {
   };
 }
 
+/**
+ * Published poems newest first, each carrying its journal number: the first
+ * poem ever published is No. 1 and the number never changes as poems are added.
+ * Drafts (dev builds only) are merged in without a number so they never shift it.
+ */
+// "Gavin Tomlins" -> "GT"; "Gavin N. Tomlins" -> "GNT".
+export function initialsOf(name) {
+  return String(name ?? "").split(/\s+/).filter(Boolean).map((w) => w[0].toUpperCase()).join("");
+}
+
 export function loadPublic() {
-  return loadAll()
-    .filter((e) => e.fm.status === "published" || (includeDrafts && e.fm.status === "draft"))
-    .map(toPublic)
-    .sort(compare);
+  const all = loadAll().map(toPublic);
+  const published = all.filter((h) => h.status === "published").sort(compare);
+  published.forEach((h, i) => { h.number = published.length - i; });
+  if (!includeDrafts) return published;
+  const drafts = all.filter((h) => h.status === "draft");
+  for (const d of drafts) d.number = null;
+  return [...published, ...drafts].sort(compare);
 }
 
 // Newest date first. Within a day, an explicit `order` wins (lower first,
 // unordered poems last), then the id keeps the result stable.
+// Newest first. Poems that share a date follow their order field, which is the
+// sequence they were written in (order 1 is the earliest), so a higher order is newer.
 function compare(a, b) {
   if (a.date !== b.date) return a.date < b.date ? 1 : -1;
-  const ao = a.order ?? Infinity;
-  const bo = b.order ?? Infinity;
-  if (ao !== bo) return ao - bo;
-  return a.id.localeCompare(b.id);
+  const ao = a.order ?? -Infinity;
+  const bo = b.order ?? -Infinity;
+  if (ao !== bo) return bo - ao;
+  return b.id.localeCompare(a.id);
 }

@@ -16,5 +16,5 @@ eleventyComputed:
 ---
 {% set newer = pagination.pages[pagination.pageNumber - 1] if pagination.pageNumber > 0 else null %}
 {% set older = pagination.pages[pagination.pageNumber + 1] if pagination.pageNumber + 1 < pagination.pages.length else null %}
-{% set number = pagination.pages.length - pagination.pageNumber %}
+{% set total = pagination.pages | published | length %}
 {% include "poem.njk" %}
