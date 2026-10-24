@@ -42,7 +42,9 @@ export default function (eleventyConfig) {
     if (!img) return "";
     const metadata = await Image(img.path, imageOptions({ widths, formats: ["webp", "jpeg"] }));
     const loading = eager ? { loading: "eager", fetchpriority: "high" } : { loading: "lazy" };
-    const html = Image.generateHTML(metadata, { alt: img.alt, sizes, ...loading, decoding: "async" });
+    // data-zoom names the largest WebP, which the lightbox shows when the sketch is clicked.
+    const zoom = metadata.webp?.at(-1)?.url;
+    const html = Image.generateHTML(metadata, { alt: img.alt, sizes, ...loading, decoding: "async", ...(zoom ? { "data-zoom": zoom } : {}) });
     const caption = img.caption ? `<figcaption>${escapeHtml(img.caption)}${img.credit ? ` (${escapeHtml(img.credit)})` : ""}</figcaption>` : "";
     const noteHtml = note ? `<figcaption class="postcard-note">${escapeHtml(note)}</figcaption>` : "";
     const marks = `<span class="stamp" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20l5-9 4 6 3-4 6 7z"/><circle cx="17" cy="6" r="2.5"/></svg></span><span class="postmark" aria-hidden="true"><span>Haiku<br>Travels</span></span>`;
