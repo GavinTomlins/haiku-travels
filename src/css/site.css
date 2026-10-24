@@ -118,49 +118,78 @@ h1 { font-size: 2rem; margin: 0 0 .5rem; }
 .poem br { display: none; }
 .poem-large { font-size: clamp(1.6rem, 1.1rem + 2.2vw, 2.15rem); line-height: 1.5; margin: 1.75rem 0 1rem; }
 
-/* On a poem page the type is sized to the poem's own longest line, so short poems stay large
+/* On a poem page the type is sized to the poem's own widest line, measured at build time
+   with the poem face in em (see widestLineEm in src/_lib/content.js), so short poems stay large
    and long ones shrink just enough to keep every line whole. The leaf measures its own width
-   (100cqi); 0.41em is EB Garamond's average character advance with room for wide letters.
+   (100cqi); the line's 1em hanging indent and a quarter em of safety must fit alongside it.
    The 1.35rem floor keeps phones readable, where the hanging indent handles any wrap. */
 .leaf { container-type: inline-size; }
-.chars-12 { --chars: 12; }
-.chars-13 { --chars: 13; }
-.chars-14 { --chars: 14; }
-.chars-15 { --chars: 15; }
-.chars-16 { --chars: 16; }
-.chars-17 { --chars: 17; }
-.chars-18 { --chars: 18; }
-.chars-19 { --chars: 19; }
-.chars-20 { --chars: 20; }
-.chars-21 { --chars: 21; }
-.chars-22 { --chars: 22; }
-.chars-23 { --chars: 23; }
-.chars-24 { --chars: 24; }
-.chars-25 { --chars: 25; }
-.chars-26 { --chars: 26; }
-.chars-27 { --chars: 27; }
-.chars-28 { --chars: 28; }
-.chars-29 { --chars: 29; }
-.chars-30 { --chars: 30; }
-.chars-31 { --chars: 31; }
-.chars-32 { --chars: 32; }
-.chars-33 { --chars: 33; }
-.chars-34 { --chars: 34; }
-.chars-35 { --chars: 35; }
-.chars-36 { --chars: 36; }
-.chars-37 { --chars: 37; }
-.chars-38 { --chars: 38; }
-.chars-39 { --chars: 39; }
-.chars-40 { --chars: 40; }
-.chars-41 { --chars: 41; }
-.chars-42 { --chars: 42; }
-.chars-43 { --chars: 43; }
-.chars-44 { --chars: 44; }
-.chars-45 { --chars: 45; }
-.chars-46 { --chars: 46; }
-.chars-47 { --chars: 47; }
-.chars-48 { --chars: 48; }
-.poem-large[class*="chars-"] { font-size: max(1.35rem, min(2.15rem, calc(100cqi / (var(--chars) * 0.41)))); }
+.fit-400 { --fit: 4; }
+.fit-425 { --fit: 4.25; }
+.fit-450 { --fit: 4.5; }
+.fit-475 { --fit: 4.75; }
+.fit-500 { --fit: 5; }
+.fit-525 { --fit: 5.25; }
+.fit-550 { --fit: 5.5; }
+.fit-575 { --fit: 5.75; }
+.fit-600 { --fit: 6; }
+.fit-625 { --fit: 6.25; }
+.fit-650 { --fit: 6.5; }
+.fit-675 { --fit: 6.75; }
+.fit-700 { --fit: 7; }
+.fit-725 { --fit: 7.25; }
+.fit-750 { --fit: 7.5; }
+.fit-775 { --fit: 7.75; }
+.fit-800 { --fit: 8; }
+.fit-825 { --fit: 8.25; }
+.fit-850 { --fit: 8.5; }
+.fit-875 { --fit: 8.75; }
+.fit-900 { --fit: 9; }
+.fit-925 { --fit: 9.25; }
+.fit-950 { --fit: 9.5; }
+.fit-975 { --fit: 9.75; }
+.fit-1000 { --fit: 10; }
+.fit-1025 { --fit: 10.25; }
+.fit-1050 { --fit: 10.5; }
+.fit-1075 { --fit: 10.75; }
+.fit-1100 { --fit: 11; }
+.fit-1125 { --fit: 11.25; }
+.fit-1150 { --fit: 11.5; }
+.fit-1175 { --fit: 11.75; }
+.fit-1200 { --fit: 12; }
+.fit-1225 { --fit: 12.25; }
+.fit-1250 { --fit: 12.5; }
+.fit-1275 { --fit: 12.75; }
+.fit-1300 { --fit: 13; }
+.fit-1325 { --fit: 13.25; }
+.fit-1350 { --fit: 13.5; }
+.fit-1375 { --fit: 13.75; }
+.fit-1400 { --fit: 14; }
+.fit-1425 { --fit: 14.25; }
+.fit-1450 { --fit: 14.5; }
+.fit-1475 { --fit: 14.75; }
+.fit-1500 { --fit: 15; }
+.fit-1525 { --fit: 15.25; }
+.fit-1550 { --fit: 15.5; }
+.fit-1575 { --fit: 15.75; }
+.fit-1600 { --fit: 16; }
+.fit-1625 { --fit: 16.25; }
+.fit-1650 { --fit: 16.5; }
+.fit-1675 { --fit: 16.75; }
+.fit-1700 { --fit: 17; }
+.fit-1725 { --fit: 17.25; }
+.fit-1750 { --fit: 17.5; }
+.fit-1775 { --fit: 17.75; }
+.fit-1800 { --fit: 18; }
+.fit-1825 { --fit: 18.25; }
+.fit-1850 { --fit: 18.5; }
+.fit-1875 { --fit: 18.75; }
+.fit-1900 { --fit: 19; }
+.fit-1925 { --fit: 19.25; }
+.fit-1950 { --fit: 19.5; }
+.fit-1975 { --fit: 19.75; }
+.fit-2000 { --fit: 20; }
+.poem-large[class*="fit-"] { font-size: max(1.35rem, min(2.15rem, calc(100cqi / (var(--fit) + 1.25)))); }
 .meta { color: var(--muted); font-size: 1rem; margin: .4rem 0 0; }
 .meta a { color: inherit; }
 

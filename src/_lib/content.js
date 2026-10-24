@@ -3,6 +3,8 @@
 // excluded unless HAIKU_INCLUDE_DRAFTS=1 and the build is not running in CI.
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
+import * as fontkit from "fontkit";
 import matter from "gray-matter";
 import yaml from "js-yaml";
 
@@ -41,11 +43,14 @@ export function loadAll() {
   return cache;
 }
 
-// Characters in the poem's longest line, clamped to the .chars-N classes the stylesheet
-// defines (12–48). The poem page uses it to size the type so that line fits unbroken.
-export function longestLine(lines) {
-  const n = Math.max(0, ...lines.map((l) => [...l].length));
-  return Math.min(48, Math.max(12, n));
+// Width in em of the poem's widest line, measured with the poem face itself (EB Garamond
+// regular, with the kerning, ligatures and old-style figures the page turns on), rounded up to
+// the nearest quarter em and clamped to the .fit-N classes the stylesheet defines (4 to 20em).
+// The poem page sizes the type so that line, plus its hanging indent, fits the column.
+const poemFont = fontkit.openSync(path.join(path.dirname(fileURLToPath(import.meta.url)), "../fonts/eb-garamond-roman.woff2"));
+export function widestLineEm(lines) {
+  const em = Math.max(0, ...lines.map((l) => poemFont.layout(l, ["kern", "liga", "onum"]).advanceWidth / poemFont.unitsPerEm));
+  return Math.min(20, Math.max(4, Math.ceil(em * 4) / 4));
 }
 
 /** The public shape. No notes, no coordinates, no file paths beyond image sources. */
@@ -76,7 +81,7 @@ export function toPublic({ fm, lines }) {
     location,
     images,
     lines,
-    longest: longestLine(lines),
+    fit: Math.round(widestLineEm(lines) * 100),
     url: `/haiku/${fm.id}/`,
   };
 }

@@ -16,6 +16,7 @@
     "@11ty/eleventy": "^3.1.2",
     "@11ty/eleventy-img": "^6.0.4",
     "@11ty/eleventy-plugin-rss": "^2.0.4",
+    "fontkit": "^2.0.4",
     "gray-matter": "^4.0.3",
     "js-yaml": "^4.1.0"
   },
