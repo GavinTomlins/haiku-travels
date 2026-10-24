@@ -7,4 +7,5 @@ export default {
   search: hash("src/js/search.js"),
   pageTurn: hash("src/js/page-turn.js"),
   poemActions: hash("src/js/poem-actions.js"),
+  styleSwitch: hash("src/js/style-switch.js"),
 };

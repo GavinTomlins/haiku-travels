@@ -28,9 +28,11 @@
   <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="/feed.xml">
   <link rel="license" href="{{ site.license.url }}">
   <link rel="stylesheet" href="/css/site.css?v={{ assets.css }}">
+  <script src="/js/style-switch.js?v={{ assets.styleSwitch }}"></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
+  <svg width="0" height="0" class="svg-defs" aria-hidden="true" focusable="false"><filter id="deckle"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="4" seed="7"/><feDisplacementMap in="SourceGraphic" scale="9" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
   <header class="site-header">
     <a class="brand" href="/">{{ site.title }}</a>
     <p class="tagline">{{ site.description }}</p>
@@ -49,6 +51,7 @@
   </main>
   <footer class="site-footer">
     <p>Haiku © {{ site.author }} · <a href="{{ site.license.url }}" rel="license">{{ site.license.short }}</a> · <a href="/feed.xml">Feed</a> · <a href="https://github.com/GavinTomlins/haiku-travels">Source</a> (MIT) · No cookies, no trackers</p>
+    <p class="style-picker">Style: <a href="?style=a" data-set-style="a">A</a> <a href="?style=b" data-set-style="b">B</a> <a href="?style=c" data-set-style="c">C</a> <a href="?style=d" data-set-style="d">D</a></p>
   </footer>
 </body>
 </html>
