@@ -18,6 +18,7 @@ export default function (eleventyConfig) {
     new Date(`${s}T00:00:00Z`).toLocaleDateString("en-AU", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }),
   );
   eleventyConfig.addFilter("year", (s) => String(s).slice(0, 4));
+  eleventyConfig.addFilter("published", (list) => list.filter((h) => h.status === "published"));
   eleventyConfig.addFilter("absolute", (u) => new URL(u, site.url).href);
   eleventyConfig.addFilter("jsonld", (o) => JSON.stringify(o).replace(/</g, "\\u003c"));
 

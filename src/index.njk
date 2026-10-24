@@ -12,6 +12,5 @@
 ---
 {% set newer = null %}
 {% set older = haikus[1] if haikus.length > 1 else null %}
-{% set number = haikus.length %}
-{% set total = haikus.length %}
+{% set total = haikus | published | length %}
 {% include "poem.njk" %}

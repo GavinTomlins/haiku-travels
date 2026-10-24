@@ -8,6 +8,6 @@ export default function () {
     }
   }
   return [...byTag.entries()]
-    .sort((a, b) => a[0].localeCompare(b[0]))
+    .sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]))
     .map(([slug, haikus]) => ({ slug, label: slug.replace(/-/g, " "), haikus }));
 }

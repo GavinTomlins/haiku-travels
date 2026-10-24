@@ -11,6 +11,8 @@ eleventyComputed:
   description: "Haiku about {{ t.label | lower }} from {{ site.title }}."
 ---
 <h1 class="archive-title">{{ t.label }}</h1>
-<p class="lede"><a href="/archive/">All poems</a> · {% for x in site.types %}{% if x.slug != t.slug %}<a class="tag" href="/type/{{ x.slug }}/">{{ x.label }}</a>{% endif %}{% endfor %}</p>
+<p class="lede">{{ t.haikus.length }} poem{% if t.haikus.length != 1 %}s{% endif %} about {{ t.label | lower }}.</p>
+{% set current = t.slug %}
+{% include "kind-nav.njk" %}
 {% set list = t.haikus %}
 {% include "haiku-list.njk" %}

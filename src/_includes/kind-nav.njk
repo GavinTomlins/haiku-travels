@@ -1,0 +1,4 @@
+<nav class="kinds" aria-label="Browse by kind">
+  <a class="tag" href="/archive/" {% if not current %}aria-current="page"{% endif %}>All <span class="count">{{ haikus.length }}</span></a>
+  {% for x in types %}<a class="tag" href="/type/{{ x.slug }}/" {% if current == x.slug %}aria-current="page"{% endif %}>{{ x.label }} <span class="count">{{ x.haikus.length }}</span></a>{% endfor %}
+</nav>

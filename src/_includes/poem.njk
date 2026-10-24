@@ -1,5 +1,5 @@
 <article class="haiku-page{% if h.status == 'draft' %} is-draft{% endif %}">
-  <p class="folio"><span class="folio-site">{{ site.title }}</span><span class="folio-num">No. {{ number }} of {{ total }}</span></p>
+  <p class="folio"><span class="folio-site">{{ site.title }}</span><span class="folio-num">{% if h.number %}No. {{ h.number }} of {{ total }}{% else %}Draft{% endif %}</span></p>
   <div class="spread{% if h.images.length %} has-postcard{% endif %}">
     <div class="leaf">
       <header class="poem-header">
@@ -21,6 +21,7 @@
     {% endif %}
   </div>
   <nav class="page-turn" aria-label="Previous and next poem">
+    <p class="byline"><span class="author-mark" title="{{ h.author }}">{{ h.initials }}<span class="visually-hidden"> — by {{ h.author }}</span></span></p>
     {% if newer %}<a class="turn-btn turn-prev" href="{{ newer.url }}" rel="prev" title="Newer: {{ newer.title }}"><span class="turn-arrow" aria-hidden="true">‹</span><span class="turn-text"><span class="turn-label">Newer</span><span class="turn-title">{{ newer.title }}</span></span></a>{% else %}<span class="turn-end turn-prev">Latest poem</span>{% endif %}
     <a class="turn-index" href="/archive/">Archive</a>
     {% if older %}<a class="turn-btn turn-next" href="{{ older.url }}" rel="next" title="Older: {{ older.title }}"><span class="turn-text"><span class="turn-label">Older</span><span class="turn-title">{{ older.title }}</span></span><span class="turn-arrow" aria-hidden="true">›</span></a>{% else %}<span class="turn-end turn-next">First poem</span>{% endif %}

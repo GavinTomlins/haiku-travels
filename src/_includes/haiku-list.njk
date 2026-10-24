@@ -1,6 +1,8 @@
 {% for group in list | byYear %}
   <h2 class="year"><span>{{ group.year }}</span></h2>
+  <div class="haiku-grid">
   {% for h in group.haikus %}{% include "haiku-card.njk" %}{% endfor %}
+  </div>
 {% else %}
   <p class="empty">No poems here yet.</p>
 {% endfor %}
