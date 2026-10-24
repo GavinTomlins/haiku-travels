@@ -61,6 +61,7 @@ export function toPublic({ fm, lines }) {
     tags: [...(fm.tags ?? [])].sort(),
     status: fm.status,
     author: fm.author,
+    order: Number.isInteger(fm.order) ? fm.order : null,
     language: fm.language ?? "en",
     collections: fm.collections ?? [],
     location,
@@ -74,5 +75,15 @@ export function loadPublic() {
   return loadAll()
     .filter((e) => e.fm.status === "published" || (includeDrafts && e.fm.status === "draft"))
     .map(toPublic)
-    .sort((a, b) => (a.date === b.date ? a.id.localeCompare(b.id) : a.date < b.date ? 1 : -1));
+    .sort(compare);
+}
+
+// Newest date first. Within a day, an explicit `order` wins (lower first,
+// unordered poems last), then the id keeps the result stable.
+function compare(a, b) {
+  if (a.date !== b.date) return a.date < b.date ? 1 : -1;
+  const ao = a.order ?? Infinity;
+  const bo = b.order ?? Infinity;
+  if (ao !== bo) return ao - bo;
+  return a.id.localeCompare(b.id);
 }
