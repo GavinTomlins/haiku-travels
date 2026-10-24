@@ -41,6 +41,13 @@ export function loadAll() {
   return cache;
 }
 
+// Characters in the poem's longest line, clamped to the .chars-N classes the stylesheet
+// defines (12–48). The poem page uses it to size the type so that line fits unbroken.
+export function longestLine(lines) {
+  const n = Math.max(0, ...lines.map((l) => [...l].length));
+  return Math.min(48, Math.max(12, n));
+}
+
 /** The public shape. No notes, no coordinates, no file paths beyond image sources. */
 export function toPublic({ fm, lines }) {
   const location = fm.location && fm.location.name ? { name: fm.location.name, country: fm.location.country ?? null } : null;
@@ -69,6 +76,7 @@ export function toPublic({ fm, lines }) {
     location,
     images,
     lines,
+    longest: longestLine(lines),
     url: `/haiku/${fm.id}/`,
   };
 }
