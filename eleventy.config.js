@@ -19,6 +19,7 @@ export default function (eleventyConfig) {
   );
   eleventyConfig.addFilter("year", (s) => String(s).slice(0, 4));
   eleventyConfig.addFilter("published", (list) => list.filter((h) => h.status === "published"));
+  eleventyConfig.addFilter("byId", (list, id) => list.find((h) => h.id === id) ?? null);
   eleventyConfig.addFilter("absolute", (u) => new URL(u, site.url).href);
   eleventyConfig.addFilter("jsonld", (o) => JSON.stringify(o).replace(/</g, "\\u003c"));
 

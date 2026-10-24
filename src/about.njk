@@ -1,24 +1,52 @@
 ---
 layout: base.njk
 title: About
+description: A technologist, social enterprise advocate and curious traveller.
 permalink: /about/
 eleventyExcludeFromCollections: true
 ---
-<h1>About</h1>
-<p>{{ site.description }} Written by {{ site.author }}, one poem per moment, filed by the day it happened.</p>
+{% set quiet = haikus | byId(about.epigraph) %}
+<article class="about">
+  <p class="folio"><span class="folio-site">{{ site.title }}</span><span class="folio-num">About</span></p>
 
-<h2 id="licence">Licence and permissions</h2>
-<p>The haiku on this site are © {{ site.author }} and licensed under the
-<a href="{{ site.license.url }}" rel="license">{{ site.license.name }}</a> ({{ site.license.short }}).</p>
-<p>You may copy and share any poem unchanged for non-commercial purposes, as long as you credit
-<strong>{{ site.author }}</strong> and link to <a href="{{ site.url }}">haikutravels.xyz</a>. You may not sell the poems,
-include them in commercial publications, products or services, or publish adaptations or translations
-without permission.</p>
-<p>Commercial use, adaptations and translations can be licensed separately, including on a fee or royalty basis.
-Write to <a href="mailto:{{ site.contactEmail }}">{{ site.contactEmail }}</a>.</p>
-<p>Photographs are © {{ site.author }} unless a caption says otherwise and are not covered by the poems' licence.</p>
+  <div class="about-hero">
+    {% haikuImage about.hero, "(min-width: 60em) 52rem, calc(100vw - 4rem)", true %}
+    <p class="about-tagline">{{ about.tagline }}</p>
+  </div>
 
-<h2>Colophon</h2>
-<p>A static site built with Eleventy and served by Cloudflare Pages. No cookies, no trackers, no accounts.
-The <a href="https://github.com/GavinTomlins/haiku-travels">site code</a> is MIT licensed; the
-<a href="https://github.com/GavinTomlins/haiku-travels-content">poems</a> are {{ site.license.short }}.</p>
+  <div class="about-columns">
+    <div class="about-main">
+      <h1 class="poem-title">About</h1>
+      {% if quiet %}
+      <blockquote class="epigraph">
+        <div class="poem" lang="{{ quiet.language }}">{% for line in quiet.lines %}<span class="line">{{ line }}</span>{% if not loop.last %}<br>{% endif %}{% endfor %}</div>
+        <p class="epigraph-credit">from <a href="{{ quiet.url }}">{{ quiet.title }}</a></p>
+      </blockquote>
+      {% endif %}
+      <p class="about-intro">{{ about.intro }}</p>
+      <p>Drawn to the simple things in life — open roads, unfamiliar places, good food, the unusual and the unexpected.</p>
+      <p>I enjoy conversations with people from all walks of life. Everyone has a story, and sometimes the most memorable encounters are the unplanned ones. A shared meal, a moment in sport, a passing conversation, a different perspective or simply a laugh along the way.</p>
+      <p>These are my small memoirs. Moments experienced, sometimes fleeting, sometimes memorable, captured in a few lines and a sketch.</p>
+      <p class="signature">{% include "emblem.svg.njk" %}<span class="signature-name">{{ site.author }}</span></p>
+    </div>
+    <aside class="about-aside" aria-label="Author">
+      {% haikuThumb about.portrait, "100px", [200] %}
+      <p class="about-name">{{ site.author }}</p>
+      <p class="about-bio">Technologist, advocate, traveller. Curious about people, places, food and life.</p>
+      <p class="about-links"><a href="mailto:{{ site.contactEmail }}">Write to me</a> · <a href="/feed.xml">Feed</a></p>
+    </aside>
+  </div>
+
+  <section class="licence" id="licence">
+    <h2>Licence and permissions</h2>
+    <p>The haiku on this site are © {{ site.author }} and licensed under the
+    <a href="{{ site.license.url }}" rel="license">{{ site.license.name }}</a> ({{ site.license.short }}).</p>
+    <p>You may copy and share any poem unchanged for non-commercial purposes, as long as you credit
+    <strong>{{ site.author }}</strong> and link to <a href="{{ site.url }}">haikutravels.xyz</a>. You may not sell the poems,
+    include them in commercial publications, products or services, or publish adaptations or translations
+    without permission.</p>
+    <p>Commercial use, adaptations and translations can be licensed separately, including on a fee or royalty basis.
+    Write to <a href="mailto:{{ site.contactEmail }}">{{ site.contactEmail }}</a>.</p>
+    <p class="fine">Sketches and photographs are © {{ site.author }} unless a caption says otherwise and are not covered by the poems' licence.</p>
+  </section>
+</article>
