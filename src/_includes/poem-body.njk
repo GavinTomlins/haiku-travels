@@ -1,0 +1,5 @@
+{#- The poem body on its own page: a haibun's prose first, then each stanza of
+    verse. Lines keep the .line/<br> pattern so feeds, reader modes and copy-paste
+    still read one line per line. Expects `h`; `large` adds the page sizing. -#}
+{% if h.prose.length %}<div class="haibun-prose" lang="{{ h.language }}">{% for p in h.prose %}<p>{{ p }}</p>{% endfor %}</div>{% endif %}
+<div class="poem{% if large %} poem-large fit-{{ h.fit }}{% endif %}" lang="{{ h.language }}">{% for stanza in h.stanzas %}<div class="stanza">{% for line in stanza %}<span class="line">{{ line }}</span>{% if not loop.last %}<br>{% endif %}{% endfor %}</div>{% endfor %}</div>
