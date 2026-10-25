@@ -3,3 +3,6 @@ _site/
 content
 .DS_Store
 .env
+# Bold face for scripts/make-monogram.mjs; fetched on demand, never committed.
+scripts/fonts/
+scripts/monogram-preview.svg

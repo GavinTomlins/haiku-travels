@@ -1,5 +1,5 @@
 {% set note = (h.location.name + ", " if h.location else "") + (h.date | readableDate) %}
-<article class="haiku-page{% if h.status == 'draft' %} is-draft{% endif %}" data-type="{{ h.type }}">
+<article class="haiku-page{% if h.status == 'draft' %} is-draft{% endif %}" data-type="{{ h.type }}" data-form="{{ h.form }}">
   {% if h.images.length %}{% haikuHero h.images[0] %}{% endif %}
   <p class="folio"><span class="folio-site">{{ site.title }}</span><span class="folio-num">{% if h.number %}No. {{ h.number }} of {{ total }}{% else %}Draft{% endif %}</span></p>
   <div class="spread{% if h.images.length %} has-postcard{% endif %}">
@@ -11,8 +11,8 @@
           {% if h.location %}· {{ h.location.name }}{% if h.location.country %}, {{ h.location.country }}{% endif %}{% endif %}
         </p>
       </header>
-      <div class="poem poem-large fit-{{ h.fit }}" lang="{{ h.language }}">{% for line in h.lines %}<span class="line">{{ line }}</span>{% if not loop.last %}<br>{% endif %}{% endfor %}</div>
-      <p class="ornament" aria-hidden="true">{% include "emblem.svg.njk" %}</p>
+      {% set large = true %}{% include "poem-body.njk" %}
+      {% set mark = h.initials %}<p class="ornament" aria-hidden="true">{% include "emblem.svg.njk" %}</p>
       <p class="tags"><a class="tag" href="/type/{{ h.type }}/">{{ h.type }}</a>{% for t in h.tags %}<a class="tag" href="/tag/{{ t }}/">{{ t }}</a>{% endfor %}</p>
       <div class="poem-actions" data-title="{{ h.title }}" data-author="{{ h.author }}" data-url="{{ h.url | absolute }}"></div>
     </div>
@@ -35,7 +35,7 @@
 <script type="application/ld+json">{{ {
   "@context": "https://schema.org",
   "@type": "CreativeWork",
-  "genre": "haiku",
+  "genre": site.forms[h.form] or "haiku",
   "headline": h.title,
   "text": h.lines | join("\n"),
   "author": { "@type": "Person", "name": h.author },

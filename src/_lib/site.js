@@ -10,6 +10,15 @@ export const site = {
     short: "CC BY-NC-ND 4.0",
     url: "https://creativecommons.org/licenses/by-nc-nd/4.0/",
   },
+  // Poetic forms, keyed as the content front matter spells them; the value is the label and the JSON-LD genre.
+  forms: {
+    "haiku-traditional": "haiku",
+    "haiku-modern": "haiku",
+    senryu: "senryu",
+    tanka: "tanka",
+    haibun: "haibun",
+    renku: "renku",
+  },
   types: [
     { slug: "travel", label: "Travel" },
     { slug: "food", label: "Food" },

@@ -117,6 +117,11 @@ h1 { font-size: 2rem; margin: 0 0 .5rem; }
 .poem .line { display: block; padding-left: 1em; text-indent: -1em; }
 .poem br { display: none; }
 .poem-large { font-size: clamp(1.6rem, 1.1rem + 2.2vw, 2.15rem); line-height: 1.5; margin: 1.75rem 0 1rem; }
+/* A renku is stanzas with a breath between them; a haibun opens with prose set smaller than the verse. */
+.stanza + .stanza { margin-top: .8em; }
+.haibun-prose { max-width: 34em; margin: 1.5rem 0 0; font-size: 1.1rem; line-height: 1.55; }
+.haibun-prose p { margin: 0 0 .9em; }
+.haibun-prose + .poem-large { margin-top: .5rem; }
 
 /* On a poem page the type is sized to the poem's own widest line, measured at build time
    with the poem face in em (see widestLineEm in src/_lib/content.js), so short poems stay large

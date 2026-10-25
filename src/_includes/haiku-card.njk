@@ -2,7 +2,8 @@
   {% if h.images.length %}<a class="haiku-card-thumb" href="{{ h.url }}" tabindex="-1" aria-hidden="true">{% haikuThumb h.images[0], "(min-width: 60em) 18rem, (min-width: 36em) 45vw, calc(100vw - 4rem)" %}</a>{% endif %}
   <div class="haiku-card-text">
     <h3 class="haiku-card-title">{% if h.number %}<span class="card-num">No. {{ h.number }}</span> {% endif %}<a href="{{ h.url }}">{{ h.title }}</a>{% if h.status == 'draft' %} <span class="badge">draft</span>{% endif %}</h3>
-    <div class="poem" lang="{{ h.language }}">{% for line in h.lines %}<span class="line">{{ line }}</span>{% if not loop.last %}<br>{% endif %}{% endfor %}</div>
+    {#- Cards show the verse only: the first stanza, so a renku or haibun previews as its opening haiku. -#}
+    <div class="poem" lang="{{ h.language }}">{% for line in h.stanzas[0] %}<span class="line">{{ line }}</span>{% if not loop.last %}<br>{% endif %}{% endfor %}</div>
     <p class="meta">
       <time datetime="{{ h.date }}">{{ h.date | readableDate }}</time>
       · <a href="/type/{{ h.type }}/">{{ h.type }}</a>
