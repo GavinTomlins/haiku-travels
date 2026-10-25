@@ -1,0 +1,15 @@
+{#- The six forms as pills. The current one (`currentForm`) is filled in its own colour; the
+    others stay quiet outlines. A form with published poems links to its page. -#}
+<p class="forms" aria-label="Poetic form">
+{%- for f in site.formList -%}
+  {%- set has = false -%}
+  {%- for g in forms %}{% if g.slug == f.slug %}{% set has = true %}{% endif %}{% endfor -%}
+  {%- if f.slug == currentForm -%}
+    {%- if has %}<a class="tag form-{{ f.slug }}" href="/form/{{ f.slug }}/" aria-current="page">{{ f.label }}</a>{% else %}<span class="tag form-{{ f.slug }}" aria-current="page">{{ f.label }}</span>{% endif -%}
+  {%- elif has -%}
+    <a class="tag form-{{ f.slug }}" href="/form/{{ f.slug }}/">{{ f.label }}</a>
+  {%- else -%}
+    <span class="tag form-{{ f.slug }} is-empty" title="no {{ f.label | lower }} poems yet">{{ f.label }}</span>
+  {%- endif -%}
+{%- endfor -%}
+</p>

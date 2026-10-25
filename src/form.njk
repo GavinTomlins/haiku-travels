@@ -1,0 +1,18 @@
+---
+layout: base.njk
+eleventyExcludeFromCollections: true
+pagination:
+  data: forms
+  size: 1
+  alias: f
+permalink: "/form/{{ f.slug }}/"
+eleventyComputed:
+  title: "{{ f.label }}"
+  description: "{{ f.label }} poems from {{ site.title }}."
+---
+<h1 class="archive-title">{{ f.label }}</h1>
+<p class="lede">{{ f.haikus.length }} {{ f.label | lower }} poem{% if f.haikus.length != 1 %}s{% endif %}.</p>
+{% set currentForm = f.slug %}
+{% include "form-nav.njk" %}
+{% set list = f.haikus %}
+{% include "haiku-list.njk" %}
