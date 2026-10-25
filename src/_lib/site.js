@@ -10,7 +10,7 @@ export const site = {
     short: "CC BY-NC-ND 4.0",
     url: "https://creativecommons.org/licenses/by-nc-nd/4.0/",
   },
-  // Poetic forms, keyed as the content front matter spells them; the value is the label and the JSON-LD genre.
+  // Poetic forms, keyed as the content front matter spells them; the value is the JSON-LD genre.
   forms: {
     "haiku-traditional": "haiku",
     "haiku-modern": "haiku",
@@ -19,6 +19,15 @@ export const site = {
     haibun: "haibun",
     renku: "renku",
   },
+  // The same forms in display order, with the label the pills show.
+  formList: [
+    { slug: "haiku-traditional", label: "Traditional" },
+    { slug: "haiku-modern", label: "Modern" },
+    { slug: "senryu", label: "Senryu" },
+    { slug: "tanka", label: "Tanka" },
+    { slug: "haibun", label: "Haibun" },
+    { slug: "renku", label: "Renku" },
+  ],
   types: [
     { slug: "travel", label: "Travel" },
     { slug: "food", label: "Food" },

@@ -13,6 +13,7 @@
       </header>
       {% set large = true %}{% include "poem-body.njk" %}
       {% set mark = h.initials %}<p class="ornament" aria-hidden="true">{% include "emblem.svg.njk" %}</p>
+      {% set currentForm = h.form %}{% include "form-nav.njk" %}
       <p class="tags"><a class="tag" href="/type/{{ h.type }}/">{{ h.type }}</a>{% for t in h.tags %}<a class="tag" href="/tag/{{ t }}/">{{ t }}</a>{% endfor %}</p>
       <div class="poem-actions" data-title="{{ h.title }}" data-author="{{ h.author }}" data-url="{{ h.url | absolute }}"></div>
     </div>
