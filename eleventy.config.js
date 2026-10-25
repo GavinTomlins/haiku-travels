@@ -9,6 +9,7 @@ export default function (eleventyConfig) {
     "src/js": "js",
     "src/fonts": "fonts",
     "src/favicon.svg": "favicon.svg",
+    "src/apple-touch-icon.png": "apple-touch-icon.png",
     "src/img": "img",
     "src/_headers": "_headers",
     "src/robots.txt": "robots.txt",
